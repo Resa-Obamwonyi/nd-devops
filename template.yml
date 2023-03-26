@@ -6,7 +6,7 @@ Resources:
     Properties: 
       SecurityGroups:
        - !Ref InstanceSecurityGroup
-      KeyName: inv-key
+      KeyName: vockey
       ImageId: 'ami-09cd747c78a9add63'
       InstanceType: t3.micro
 
