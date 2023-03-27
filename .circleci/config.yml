@@ -13,25 +13,44 @@ jobs:
   #         name: "Create Cloudformation stack"
   #         command: aws cloudformation deploy --template-file template.yml --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} --region us-east-1
 
-  # Exercise: Config and Deployment
-  configure_infrastructure: 
+  # # Exercise: Config and Deployment
+  # configure_infrastructure: 
+  #   docker:
+  #     - image: python:3.11-rc-alpine
+  #   steps:
+  #     - checkout
+  #     - add_ssh_keys:
+  #         fingerprints: ["b1:ee:af:c7:56:17:9d:75:e3:ba:e5:af:71:22:6d:fe", "9c:1b:6f:04:67:e6:d9:2b:ea:93:89:92:ca:78:d2:0b"] 
+  #     - run:
+  #         name: Install Ansible
+  #         command: apk add --update ansible
+  #     - run:
+  #         name: Run Playbook and Configure server
+  #         command: |
+  #           ansible-playbook -i inventory.txt main.yml
+
+
+  # smoke test
+  smoke_test:
     docker:
-      - image: python:3.11-rc-alpine
+      - image: alpine:latest
     steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints: ["b1:ee:af:c7:56:17:9d:75:e3:ba:e5:af:71:22:6d:fe", "9c:1b:6f:04:67:e6:d9:2b:ea:93:89:92:ca:78:d2:0b"] 
-      - run:
-          name: Install Ansible
-          command: apk add --update ansible
-      - run:
-          name: Run Playbook and Configure server
+      - run: apk add --update curl
+      - run: 
+          name: smoke test
           command: |
-            ansible-playbook -i inventory.txt main.yml
+            URL="https://blog.udacity.com/"
+            if curl -s --head ${URL}
+            then
+              return 0
+            else
+              return 1
+            fi
 
 # Invoke jobs via workflows
 workflows:
   create-infra-workflow:
     jobs:
       # - create_infrastructure
-      - configure_infrastructure
+      # - configure_infrastructure
+      - smoke_test
