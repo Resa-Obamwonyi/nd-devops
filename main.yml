@@ -1,0 +1,12 @@
+---
+# Exercise: Define Ansible Playbook
+# for inventory
+# aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> inventory.txt
+- name: Exercise for setting up a webserver in an EC2 instance
+  hosts: 54.164.96.246
+  user: ubuntu
+  become: true
+  become_method: sudo
+  become_user: root
+  roles:
+   - setup
