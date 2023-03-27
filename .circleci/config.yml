@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          	fingerprints: ["9c:1b:6f:04:67:e6:d9:2b:ea:93:89:92:ca:78:d2:0b"] 
+          fingerprints: ["9c:1b:6f:04:67:e6:d9:2b:ea:93:89:92:ca:78:d2:0b"] 
       - run:
           name: Install Ansible
           command: apk add --update ansible
