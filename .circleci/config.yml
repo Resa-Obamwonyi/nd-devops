@@ -110,7 +110,7 @@ jobs:
 
 # Invoke jobs via workflows
 workflows:
-  create-infra-workflow:
+  push-to-production-workflow:
     jobs:
       # - create_infrastructure
       # - configure_infrastructure
